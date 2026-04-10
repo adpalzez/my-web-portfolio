@@ -3,101 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مملكة صلاح الدين الايوبي - أبا مالك</title>
+    <title>مملكة صلاح الدين الأيوبي - أبا مالك</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        body { font-family: 'Cairo', sans-serif; }
-        
-        /* تأثيرات للأزرار عند الضغط عليها في الجوال */
-        .game-btn:active { transform: scale(0.98); }
-        .resource-btn:active { transform: translateY(2px); }
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; background: radial-gradient(circle, #111827 0%, #000000 100%); }
+        .stat-card { transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
+        .stat-card:hover { transform: translateY(-5px); border-color: #eab308; }
+        .btn-action { transition: all 0.2s active; }
+        .btn-action:active { transform: scale(0.95); }
+        .upgrade-badge { font-size: 0.7rem; background: #ef4444; color: white; padding: 2px 6px; border-radius: 10px; position: absolute; top: -5px; right: -5px; }
     </style>
 </head>
-<body class="bg-gray-950 text-white p-5">
+<body class="text-white p-4 min-h-screen">
 
-    <header class="text-center mb-8 bg-gray-900 p-6 rounded-2xl border border-yellow-600 shadow-2xl">
-        <img src="https://img.icons8.com/color/96/castle.png" class="mx-auto mb-4" alt="Castle Icon">
-        <h1 class="text-3xl font-bold text-yellow-500">مملكة صلاح الدين الايوبي</h1>
-        <p class="text-gray-300">ابنِ قلعتك، واجمع جيشك، ودافع عن المملكة بروح القائد أبا مالك العقيلي.</p>
+    <header class="text-center mb-6 bg-gray-900/80 backdrop-blur-md p-6 rounded-3xl border-b-4 border-yellow-600 shadow-2xl animate__animated animate__fadeInDown">
+        <div class="relative inline-block">
+            <img src="https://img.icons8.com/color/96/castle.png" class="mx-auto mb-2" alt="Castle Icon">
+            <span class="absolute bottom-0 right-0 bg-yellow-600 text-black text-xs font-bold px-2 py-1 rounded-lg">إصدار القائد</span>
+        </div>
+        <h1 class="text-4xl font-black text-yellow-500 mb-2">مملكة صلاح الدين</h1>
+        <p id="rankDisplay" class="text-blue-400 font-bold tracking-widest uppercase">الرتبة: متطوع ناشئ</p>
     </header>
 
-    <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 bg-gray-900 p-5 rounded-2xl border border-gray-700 shadow-lg">
-        <div class="text-center p-4 bg-yellow-950 rounded-xl border border-yellow-800">
-            <span class="text-4xl">💰</span>
-            <div class="text-sm text-yellow-300">الذهب</div>
-            <div id="goldCount" class="text-3xl font-bold text-yellow-100">100</div>
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 animate__animated animate__fadeIn">
+        <div class="stat-card text-center p-3 bg-gray-900 rounded-2xl shadow-inner">
+            <span class="text-3xl">💰</span>
+            <div class="text-xs text-yellow-500 font-bold uppercase">الذهب</div>
+            <div id="goldCount" class="text-2xl font-black text-white">100</div>
         </div>
-        <div class="text-center p-4 bg-amber-950 rounded-xl border border-amber-800">
-            <span class="text-4xl">🌲</span>
-            <div class="text-sm text-amber-300">الخشب</div>
-            <div id="woodCount" class="text-3xl font-bold text-amber-100">100</div>
+        <div class="stat-card text-center p-3 bg-gray-900 rounded-2xl shadow-inner">
+            <span class="text-3xl">🌲</span>
+            <div class="text-xs text-amber-500 font-bold uppercase">الخشب</div>
+            <div id="woodCount" class="text-2xl font-black text-white">100</div>
         </div>
-        <div class="text-center p-4 bg-red-950 rounded-xl border border-red-800">
-            <span class="text-4xl">⚔️</span>
-            <div class="text-sm text-red-300">الجيش</div>
-            <div id="armyCount" class="text-3xl font-bold text-red-100">0</div>
+        <div class="stat-card text-center p-3 bg-gray-900 rounded-2xl shadow-inner">
+            <span class="text-3xl">⚔️</span>
+            <div class="text-xs text-red-500 font-bold uppercase">الجيش</div>
+            <div id="armyCount" class="text-2xl font-black text-white">0</div>
         </div>
-        <div class="text-center p-4 bg-blue-950 rounded-xl border border-blue-800">
-            <span class="text-4xl">🛡️</span>
-            <div class="text-sm text-blue-300">القلاع</div>
-            <div id="castleCount" class="text-3xl font-bold text-blue-100">0</div>
+        <div class="stat-card text-center p-3 bg-gray-900 rounded-2xl shadow-inner">
+            <span class="text-3xl">🛡️</span>
+            <div class="text-xs text-blue-500 font-bold uppercase">القلاع</div>
+            <div id="castleCount" class="text-2xl font-black text-white">0</div>
         </div>
     </section>
 
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         
-        <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800 shadow-lg">
-            <h2 class="text-xl font-semibold mb-6 text-gray-100 text-center">جمع الموارد الأساسية</h2>
-            <div class="space-y-4">
-                <button onclick="collectResource('gold')" class="resource-btn w-full bg-yellow-600 text-black font-bold py-4 px-6 rounded-full text-lg shadow-md hover:bg-yellow-700 active:bg-yellow-800 transition-all flex items-center justify-center">
-                    💰 جمع الذهب (+10)
-                </button>
-                <button onclick="collectResource('wood')" class="resource-btn w-full bg-amber-700 text-white font-bold py-4 px-6 rounded-full text-lg shadow-md hover:bg-amber-800 active:bg-amber-900 transition-all flex items-center justify-center">
-                    🌲 قطع الخشب (+10)
+        <div class="space-y-4">
+            <div class="bg-gray-900/50 p-5 rounded-3xl border border-gray-800">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-tools text-yellow-500"></i> معسكر الإنتاج</h2>
+                <div class="grid grid-cols-1 gap-3">
+                    <button onclick="collectResource('gold')" class="btn-action w-full bg-yellow-600 hover:bg-yellow-500 text-black font-black py-4 rounded-2xl flex flex-col items-center shadow-lg relative">
+                        <span>💰 جمع الذهب (<span id="goldPerClick">10</span>+)</span>
+                        <span class="text-[10px] opacity-70">اضغط للجمع السريع</span>
+                    </button>
+                    <button onclick="collectResource('wood')" class="btn-action w-full bg-amber-800 hover:bg-amber-700 text-white font-black py-4 rounded-2xl flex flex-col items-center shadow-lg">
+                        <span>🌲 قطع الخشب (<span id="woodPerClick">10</span>+)</span>
+                        <span class="text-[10px] opacity-70">تجهيز الموارد للبناء</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-blue-900/20 p-5 rounded-3xl border border-blue-900/30">
+                <h2 class="text-lg font-bold mb-4 text-blue-400">تطوير الأدوات (التعمير السريع)</h2>
+                <button onclick="upgradeTools()" class="w-full bg-blue-600 hover:bg-blue-500 py-3 rounded-xl font-bold text-sm transition-all mb-2 shadow-lg">
+                    ⚒️ ترقية الفؤوس والمناجم (💰<span id="upgradeCost">150</span>)
                 </button>
             </div>
         </div>
 
-        <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800 shadow-lg">
-            <h2 class="text-xl font-semibold mb-6 text-gray-100 text-center">بناء المملكة بروح صلاح الدين</h2>
-            <div class="space-y-4">
-                <button onclick="buildArmy()" class="game-btn w-full bg-red-700 text-white font-bold py-4 px-6 rounded-full text-lg shadow-lg hover:bg-red-800 active:bg-red-900 transition-all flex items-center justify-center border-2 border-red-900">
-                    ⚔️ تدريب جندي (التكلفة: 💰50)
-                </button>
-                <button onclick="buildCastle()" class="game-btn w-full bg-blue-700 text-white font-bold py-4 px-6 rounded-full text-lg shadow-lg hover:bg-blue-800 active:bg-blue-900 transition-all flex items-center justify-center border-2 border-blue-900">
-                    🛡️ بناء قلعة (التكلفة: 💰200, 🌲200)
-                </button>
+        <div class="space-y-4">
+            <div class="bg-red-900/20 p-5 rounded-3xl border border-red-900/30">
+                <h2 class="text-lg font-bold mb-4 text-red-500">مقر القيادة العسكرية</h2>
+                <div class="space-y-3">
+                    <button onclick="buildArmy()" class="btn-action w-full bg-red-700 hover:bg-red-600 text-white font-black py-5 rounded-2xl shadow-xl border-b-4 border-red-900">
+                        ⚔️ تدريب فرقة مشاة (💰50)
+                    </button>
+                    <button onclick="buildCastle()" class="btn-action w-full bg-indigo-700 hover:bg-indigo-600 text-white font-black py-5 rounded-2xl shadow-xl border-b-4 border-indigo-900">
+                        🛡️ تشييد قلعة حصينة (💰200 | 🌲200)
+                    </button>
+                </div>
+            </div>
+            
+            <div id="bonusAlert" class="hidden animate__animated animate__bounceIn bg-green-600 text-white p-3 rounded-xl text-center font-bold">
+                🎊 منحة من القائد صلاح الدين: +50 ذهب!
             </div>
         </div>
-    </section>
-    
-    <div class="text-center mt-12 mb-8">
-        <a href="index.html" class="bg-black text-yellow-500 py-3 px-8 rounded-full font-bold text-lg transition-all border-2 border-yellow-500 hover:bg-yellow-500 hover:text-black shadow-lg">
-           العودة للمحفظة الرئيسية
-        </a>
     </div>
+
+    <footer class="text-center mt-10 pb-6">
+        <a href="index.html" class="inline-flex items-center gap-2 bg-white text-black px-10 py-4 rounded-2xl font-black shadow-2xl hover:bg-yellow-500 transition-all">
+            <i class="fas fa-home"></i> العودة للمحفظة الرئيسية
+        </a>
+    </footer>
 
     <script>
         let gold = 100;
         let wood = 100;
         let army = 0;
         let castles = 0;
+        let clickPower = 10;
+        let upgradeCost = 150;
 
         function updateDisplay() {
-            document.getElementById('goldCount').innerText = gold;
-            document.getElementById('woodCount').innerText = wood;
+            document.getElementById('goldCount').innerText = Math.floor(gold);
+            document.getElementById('woodCount').innerText = Math.floor(wood);
             document.getElementById('armyCount').innerText = army;
             document.getElementById('castleCount').innerText = castles;
+            document.getElementById('goldPerClick').innerText = clickPower;
+            document.getElementById('woodPerClick').innerText = clickPower;
+            document.getElementById('upgradeCost').innerText = upgradeCost;
+            updateRank();
         }
 
         function collectResource(type) {
-            if (type === 'gold') {
-                gold += 10;
-            } else if (type === 'wood') {
-                wood += 10;
+            if (type === 'gold') gold += clickPower;
+            if (type === 'wood') wood += clickPower;
+            
+            // فرصة 5% للحصول على مكافأة عشوائية
+            if (Math.random() < 0.05) {
+                gold += 50;
+                showBonus();
             }
             updateDisplay();
+        }
+
+        function upgradeTools() {
+            if (gold >= upgradeCost) {
+                gold -= upgradeCost;
+                clickPower += 5;
+                upgradeCost = Math.floor(upgradeCost * 1.5);
+                updateDisplay();
+            } else {
+                alert("الذهب لا يكفي للتطوير!");
+            }
         }
 
         function buildArmy() {
@@ -106,7 +148,7 @@
                 army += 1;
                 updateDisplay();
             } else {
-                alert("الذهب لا يكفي لتدريب الجيش. اجمع المزيد من الذهب.");
+                alert("اجمع المزيد من الذهب لتدريب الجيش!");
             }
         }
 
@@ -117,10 +159,25 @@
                 castles += 1;
                 updateDisplay();
             } else {
-                alert("الذهب أو الخشب لا يكفي لبناء القلعة. اجمع المزيد من الموارد.");
+                alert("الموارد غير كافية لبناء قلعة!");
             }
+        }
+
+        function updateRank() {
+            let rank = "متطوع ناشئ";
+            if (army >= 10) rank = "قائد فصيل";
+            if (army >= 50) rank = "أمير عسكري";
+            if (castles >= 5) rank = "سلطان القلاع";
+            if (army >= 100 && castles >= 10) rank = "أسد المملكة";
+            document.getElementById('rankDisplay').innerText = "الرتبة: " + rank;
+        }
+
+        function showBonus() {
+            const alert = document.getElementById('bonusAlert');
+            alert.classList.remove('hidden');
+            setTimeout(() => alert.classList.add('hidden'), 2000);
         }
     </script>
 </body>
-    </html>
-                
+                        </html> «القائد ابا مالك »
+            
